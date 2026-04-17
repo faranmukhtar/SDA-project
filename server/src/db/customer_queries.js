@@ -2,7 +2,7 @@ const pool = require("./pool");
 
 async function getCustomer(index) {
   const { rows } = await pool.query(
-    "SELECT * FROM Customers WHERE index = $1",
+    "SELECT * FROM Customers WHERE customer_id = $1",
     [index],
   );
   console.log(rows);
