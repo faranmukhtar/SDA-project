@@ -31,21 +31,23 @@ async function getOrdersByIndex(index) {
 async function insertOrder({ customerID, order_date, delivery_date }) {
   await pool.query(
     'INSERT INTO "Order" (CustomerID, Order_date, Delivery_date) VALUES ($1, $2, $3)',
-    [customerID, order_date, delivery_date]
+    [customerID, order_date, delivery_date],
   );
 }
 
 async function updateOrder(id, fields) {
   const keys = Object.keys(fields);
-  
-  if (keys.length === 0) return; 
 
-  const setString = keys.map((key, index) => `"${key}" = $${index + 1}`).join(", ");
+  if (keys.length === 0) return;
+
+  const setString = keys
+    .map((key, index) => `"${key}" = $${index + 1}`)
+    .join(", ");
   const values = Object.values(fields);
-  values.push(id); 
-  
+  values.push(id);
+
   const query = `UPDATE "Order" SET ${setString} WHERE OrderID = $${values.length}`;
-  
+
   await pool.query(query, values);
 }
 
