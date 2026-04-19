@@ -5,7 +5,7 @@ async function getCustomer(index) {
     "SELECT * FROM Customers WHERE customer_id = $1",
     [index],
   );
-  console.log(rows);
+  return rows;
 }
 
 async function getCustomerPassword(username) {
@@ -13,7 +13,7 @@ async function getCustomerPassword(username) {
     "SELECT * FROM Customers WHERE username = $1",
     [username],
   );
-  console.log(rows);
+  return rows;
 }
 
 async function insertCustomer({

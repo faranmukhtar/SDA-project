@@ -8,7 +8,7 @@ async function getProducts(limit, offset) {
     "SELECT * FROM Products LIMIT $1 OFFSET $2",
     [limit, offset],
   );
-  console.log(rows);
+  return rows;
 }
 
 async function getProduct(name) {
@@ -16,7 +16,7 @@ async function getProduct(name) {
     "SELECT * FROM Products WHERE product_name = $1",
     [name],
   );
-  console.log(rows);
+  return rows;
 }
 
 async function insertProduct({
@@ -39,7 +39,7 @@ async function searchProductByQuery(query) {
     "SELECT * FROM Products WHERE product_name ILIKE $1 OR description ILIKE $1",
     [`%${query}%`],
   );
-  console.log(rows);
+  return rows;
 }
 
 async function searchProductByCategory(category) {
@@ -47,7 +47,7 @@ async function searchProductByCategory(category) {
     "SELECT * FROM Products WHERE category_id = $1",
     [category],
   );
-  console.log(rows);
+  return rows;
 }
 
 async function updateProduct(id, fields) {

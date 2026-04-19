@@ -2,7 +2,7 @@ const pool = require("./pool");
 
 async function getAllCategories() {
   const { rows } = await pool.query("SELECT * FROM Product_Category");
-  console.log(rows);
+  return rows;
 }
 
 async function insertCategory({ category_id, category_name }) {

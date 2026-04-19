@@ -5,7 +5,7 @@ async function getRetailer(name) {
     "SELECT * FROM Retailers WHERE retailer_name = $1",
     [name],
   );
-  console.log(rows);
+  return rows;
 }
 
 async function insertRetailer({ name, phone, username, password }) {
@@ -20,7 +20,7 @@ async function getRetailerPassword(username) {
     "SELECT password FROM Retailers WHERE username = $1",
     [username],
   );
-  console.log(rows);
+  return rows;
 }
 
 async function updateRetailer(id, fields) {
