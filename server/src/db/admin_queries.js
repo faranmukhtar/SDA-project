@@ -5,7 +5,7 @@ async function getAdmin(index) {
     "Select * FROM ADMINS WHERE admin_id = $1",
     [index],
   );
-  console.log(rows);
+  return rows;
 }
 
 async function insertAdmin({ admin_id, admin_name, username, password }) {
@@ -20,7 +20,7 @@ async function getAdminPassword(username) {
     "Select * FROM ADMINS Where username = $1",
     [username],
   );
-  console.log(rows);
+  return rows;
 }
 
 async function updateAdmin(id, fields) {
