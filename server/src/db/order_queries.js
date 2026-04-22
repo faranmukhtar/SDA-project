@@ -1,14 +1,8 @@
 const pool = require("./pool");
 
 async function getOrdersByCustomer(index) {
-  try {
-    const query = `SELECT * FROM \`Order\` WHERE CustomerID = ?`;
-    const [rows] = await pool.query(query, [index]);
-    return rows;
-  } catch (error) {
-    console.error("Error fetching orders by customer:", error);
-    throw error;
-  }
+  const { rows } = await pool.query('SELECT * FROM "Order" WHERE CustomerID = $1', [index]);
+  return rows;
 }
 
 async function getOrdersByIndex(index) {
@@ -27,6 +21,7 @@ async function getOrdersByIndex(index) {
     throw error;
   }
 }
+
 
 async function insertOrder({ customerID, order_date, delivery_date }) {
   await pool.query(

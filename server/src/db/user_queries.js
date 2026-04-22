@@ -1,16 +1,18 @@
 const pool = require("./pool");
 
 async function getuser(index) {
-  const { rows } = await pool.query("SELECT * FROM Users WHERE User_id = $1", [
-    index,
-  ]);
+  const { rows } = await pool.query(
+    "SELECT * FROM Users WHERE User_id = $1",
+    [index],
+  );
   console.log(rows);
 }
 
 async function getuserPassword(username) {
-  const { rows } = await pool.query("SELECT * FROM Users WHERE username = $1", [
-    username,
-  ]);
+  const { rows } = await pool.query(
+    "SELECT * FROM Users WHERE username = $1",
+    [username],
+  );
   console.log(rows);
 }
 
@@ -21,11 +23,11 @@ async function insertuser({
   phone_number,
   username,
   password,
-  role_id,
+  role_id
 }) {
   await pool.query(
     "INSERT INTO Users(Name , city , Address , Phone_number , username , Password , role_id ) VALUES ($1, $2, $3, $4, $5, $6 , $7)",
-    [name, city, address, phone_number, username, password, role_id],
+    [name, city, address, phone_number, username, password , role_id],
   );
 }
 
@@ -54,7 +56,7 @@ async function updateuser(id, fields) {
 async function deleteuser(username) {
   const query = `
   DELETE FROM Users
-  WHERE User_id = $1
+  WHERE username = $1
   `;
   await pool.query(query, [username]);
 }
