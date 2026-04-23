@@ -14,7 +14,7 @@ userRouter.get("/admin", userController.getAdmin);
 
 userRouter.get("/User", userController.getCustomer);
 
-userRouter.get("/retailer", userController.getRetailer)
+userRouter.get("/retailer", userController.getRetailer);
 
 module.exports = {
   userRouter,

@@ -1,5 +1,4 @@
-const getCategories = (req, res) => {
-};
+const getCategories = (req, res) => {};
 
 const getCategoryIndex = (req, res) => {};
 
@@ -10,9 +9,9 @@ const deleteCategory = (req, res) => {};
 const updateCategory = (req, res) => {};
 
 module.exports = {
-    getCategories,
-    getCategoryIndex,
-    postCategory,
-    deleteCategory,
-    updateCategory
-}
+  getCategories,
+  getCategoryIndex,
+  postCategory,
+  deleteCategory,
+  updateCategory,
+};

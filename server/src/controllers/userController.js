@@ -19,5 +19,5 @@ module.exports = {
   deleteUser,
   getAdmin,
   getCustomer,
-  getRetailer
+  getRetailer,
 };
