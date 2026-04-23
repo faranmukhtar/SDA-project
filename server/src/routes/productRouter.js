@@ -12,6 +12,8 @@ productRouter.put("/:index", productController.putProduct);
 
 productRouter.delete("/:index", productController.deleteProduct);
 
+productRouter.get("/search", productController.getProductSearch)
+
 module.exports = {
   productRouter,
 };

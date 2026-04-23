@@ -1,4 +1,6 @@
 const express = require("express");
+const cors = require('cors');
+
 const { indexRouter } = require("./routes/indexRouter");
 const { productRouter } = require("./routes/productRouter");
 const { adminRouter } = require("./routes/adminRouter");
@@ -8,6 +10,8 @@ const { retailerRouter } = require("./routes/retailerRouter");
 
 const app = express();
 const PORT = 3000;
+
+app.use(cors({ origin: 'http://localhost:3000' }));
 
 app.use("/", indexRouter);
 app.use("/product", productRouter);
