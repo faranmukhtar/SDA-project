@@ -4,14 +4,14 @@ async function getUser(index) {
   const { rows } = await pool.query("SELECT * FROM Users WHERE User_id = $1", [
     index,
   ]);
-  console.log(rows);
+  return rows[0];
 }
 
 async function getUserByUsername(username) {
   const { rows } = await pool.query("SELECT * FROM Users WHERE username = $1", [
     username,
   ]);
-  console.log(rows);
+  return rows[0];
 }
 
 async function insertUser({
@@ -23,10 +23,15 @@ async function insertUser({
   password,
   role_id,
 }) {
-  await pool.query(
-    "INSERT INTO Users(Name , city , Address , Phone_number , username , Password , role_id ) VALUES ($1, $2, $3, $4, $5, $6 , $7)",
+  const { rows } = await pool.query(
+    `INSERT INTO 
+    Users(Name , city , Address , Phone_number , username , Password , role_id ) 
+    VALUES ($1, $2, $3, $4, $5, $6 , $7)
+    RETURNING *`,
     [name, city, address, phone_number, username, password, role_id],
   );
+
+  return rows[0];
 }
 
 // Here fields is a javascript object with keys being the fields you want to change and values their new values
@@ -46,8 +51,10 @@ async function updateUser(id, fields) {
     UPDATE Users
     SET ${setClause}
     where User_id = $${keys.length + 1}
+    RETURNING *
   `;
-  await pool.query(query, values);
+  const { rows } = await pool.query(query, values);
+  return rows[0];
 }
 
 // username or id
@@ -56,7 +63,9 @@ async function deleteUser(username) {
   DELETE FROM Users
   WHERE username = $1
   `;
-  await pool.query(query, [username]);
+  const { rowCount } = await pool.query(query, [username]);
+
+  return rowCount > 0;
 }
 
 module.exports = {
