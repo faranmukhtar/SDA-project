@@ -1,20 +1,20 @@
 const pool = require("./pool");
 
-async function getuser(index) {
+async function getUser(index) {
   const { rows } = await pool.query("SELECT * FROM Users WHERE User_id = $1", [
     index,
   ]);
-  console.log(rows);
+  return rows[0];
 }
 
-async function getuserPassword(username) {
+async function getUserByUsername(username) {
   const { rows } = await pool.query("SELECT * FROM Users WHERE username = $1", [
     username,
   ]);
-  console.log(rows);
+  return rows[0];
 }
 
-async function insertuser({
+async function insertUser({
   name,
   city,
   address,
@@ -23,15 +23,20 @@ async function insertuser({
   password,
   role_id,
 }) {
-  await pool.query(
-    "INSERT INTO Users(Name , city , Address , Phone_number , username , Password , role_id ) VALUES ($1, $2, $3, $4, $5, $6 , $7)",
+  const { rows } = await pool.query(
+    `INSERT INTO 
+    Users(Name , city , Address , Phone_number , username , Password , role_id ) 
+    VALUES ($1, $2, $3, $4, $5, $6 , $7)
+    RETURNING *`,
     [name, city, address, phone_number, username, password, role_id],
   );
+
+  return rows[0];
 }
 
 // Here fields is a javascript object with keys being the fields you want to change and values their new values
 // This requires heavy string manipulation.
-async function updateuser(id, fields) {
+async function updateUser(id, fields) {
   const keys = Object.keys(fields);
   if (keys.length === 0) return;
 
@@ -46,23 +51,27 @@ async function updateuser(id, fields) {
     UPDATE Users
     SET ${setClause}
     where User_id = $${keys.length + 1}
+    RETURNING *
   `;
-  await pool.query(query, values);
+  const { rows } = await pool.query(query, values);
+  return rows[0];
 }
 
 // username or id
-async function deleteuser(username) {
+async function deleteUser(username) {
   const query = `
   DELETE FROM Users
   WHERE username = $1
   `;
-  await pool.query(query, [username]);
+  const { rowCount } = await pool.query(query, [username]);
+
+  return rowCount > 0;
 }
 
 module.exports = {
-  getuser,
-  getuserPassword,
-  insertuser,
-  updateuser,
-  deleteuser,
+  getUser,
+  getUserByUsername,
+  insertUser,
+  updateUser,
+  deleteUser,
 };
