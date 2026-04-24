@@ -9,7 +9,7 @@
   box-sizing: border-box;
 }
 
-.error-content{
+.error-content {
   text-align: center;
   background-color: #ffffff;
   padding: 40px 50px;
@@ -20,20 +20,20 @@
   rotate: calc();
 }
 
-.heading{
+.heading {
   font-size: 48px;
   color: #08060d;
   margin-top: 0;
   margin-bottom: 10px;
 }
 
-.subtext{
+.subtext {
   font-size: 18px;
   color: #6b6375;
   margin-bottom: 20px;
 }
 
-.error-message{
+.error-message {
   font-size: 16px;
   color: #d32f2f;
   background-color: #fce4e4;
@@ -43,7 +43,7 @@
   word-wrap: break-word;
 }
 
-.home-button{
+.home-button {
   display: inline-block;
   background-color: #0a9ebc;
   color: #ffffff;
@@ -51,12 +51,12 @@
   font-size: 16px;
   font-weight: bold;
   padding: 14px 30px;
-  border-radius: 30px; 
+  border-radius: 30px;
   transition: all 0.2s ease-in-out;
   box-shadow: 0 4px 6px rgba(12, 146, 172, 0.2);
 }
 
-.home-button:hover{
+.home-button:hover {
   background-color: #0a798f;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(12, 146, 172, 0.3);

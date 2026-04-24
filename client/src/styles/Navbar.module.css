@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 
-
-.navbar{
+.navbar {
   display: flex;
   align-items: center;
   background-color: #0c92ac;
@@ -11,7 +10,7 @@
   font-family: Arial, sans-serif;
 }
 
-.menu-btn{
+.menu-btn {
   background: transparent;
   border: none;
   cursor: pointer;
@@ -22,7 +21,7 @@
   margin-right: 25px;
 }
 
-.menu-line{
+.menu-line {
   width: 32px;
   height: 5px;
   background-color: #5ab1d3;
@@ -30,8 +29,8 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.logo{
-  font-family: 'Great Vibes', cursive;
+.logo {
+  font-family: "Great Vibes", cursive;
   font-size: 52px;
   color: #ffffff;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
@@ -39,14 +38,14 @@
   text-decoration: none;
 }
 
-.search-container{
+.search-container {
   flex: 1;
   justify-content: center;
   display: flex;
   margin: 0 30px;
 }
 
-.search-box{
+.search-box {
   display: flex;
   align-items: center;
   background-color: #ffffff;
@@ -58,7 +57,7 @@
   overflow: hidden;
 }
 
-.search-input{
+.search-input {
   flex: 1;
   border: none;
   outline: none;
@@ -69,17 +68,17 @@
   background-color: transparent;
 }
 
-.search-input::placeholder{
+.search-input::placeholder {
   color: gray;
 }
 
-.divider{
+.divider {
   width: 1px;
   height: 60%;
   background-color: #a0a0a0;
 }
 
-.search-icon-btn{
+.search-icon-btn {
   background: transparent;
   border: none;
   padding: 0 15px;
@@ -90,14 +89,13 @@
   justify-content: center;
 }
 
-
-.action-buttons{
+.action-buttons {
   display: flex;
   gap: 20px;
   align-items: center;
 }
 
-.nav-btn{
+.nav-btn {
   background-color: transparent;
   border: 1px solid rgba(0, 229, 255, 0.8);
   border-radius: 25px;
@@ -108,22 +106,26 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  box-shadow: 0 0 10px rgba(0, 229, 255, 0.3), inset 0 0 5px rgba(0, 229, 255, 0.2);
+  box-shadow:
+    0 0 10px rgba(0, 229, 255, 0.3),
+    inset 0 0 5px rgba(0, 229, 255, 0.2);
   transition: all 0.2s ease-in-out;
 }
 
-.nav-btn:hover{
+.nav-btn:hover {
   background-color: rgba(0, 229, 255, 0.1);
-  box-shadow: 0 0 15px rgba(0, 229, 255, 0.5), inset 0 0 10px rgba(0, 229, 255, 0.4);
+  box-shadow:
+    0 0 15px rgba(0, 229, 255, 0.5),
+    inset 0 0 10px rgba(0, 229, 255, 0.4);
 }
 
-.search-svg{
-  width: 20px;   
+.search-svg {
+  width: 20px;
   height: 20px;
   display: block;
 }
 
-.search-icon-btn{
+.search-icon-btn {
   background: transparent;
   border: none;
   padding: 0 15px;
