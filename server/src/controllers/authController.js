@@ -6,13 +6,13 @@ const roleQueries = require("../db/roles_queries");
 const login = async (req, res) => {
   const { username, password } = req.body;
   const user = await userQueries.getUserByUsername(username);
-  if (!user || !(await bcrypt.compare(user.password, password))) {
-    res.status(401).json({ error: "Invalid credentials" });
+  if (!user || !(await bcrypt.compare(password, user.password))) {
+    return res.status(401).json({ error: "Invalid credentials" });
   }
 
   const role = await roleQueries.getRole(user.role_id);
   if (!role) {
-    res.status(401).json({ error: "Invalid role" });
+    return res.status(401).json({ error: "Invalid role" });
   }
 
   const payload = {
@@ -33,7 +33,7 @@ const login = async (req, res) => {
 const refresh = async (req, res) => {
   const { refreshToken } = req.body;
   if (!refreshToken) {
-    res.status(402).json({ error: "No refresh token" });
+    res.status(401).json({ error: "No refresh token" });
   }
 
   try {
@@ -41,7 +41,7 @@ const refresh = async (req, res) => {
     const payload = {
       id: decoded.id,
       username: decoded.username,
-      password: decoded.password,
+      role: decoded.role,
     };
     const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "15m",
@@ -74,7 +74,7 @@ const signup = async (req, res) => {
     res.status(409).json({ error: "Username already in use!" });
   }
 
-  const hashedPassword = bcrypt.hash(user.password, 10);
+  const hashedPassword = await bcrypt.hash(user.password, 10);
 
   const userData = fields.reduce((acc, field) => {
     acc[field] = field === "password" ? hashedPassword : user[field];
@@ -83,7 +83,8 @@ const signup = async (req, res) => {
 
   try {
     const result = await userQueries.insertUser({ ...userData, role_id: 1 });
-    const roleName = await roleQueries.getRole(result.role_id).role_name;
+    const role = await roleQueries.getRole(result.role_id);
+    let roleName = role.role_name;
 
     const payload = {
       id: result.id,

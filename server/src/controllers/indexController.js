@@ -1,5 +1,5 @@
 const getIndex = (req, res) => {
-  res.json({message: "Hello world"});
+  res.json({ message: "Hello world" });
 };
 
 module.exports = {
