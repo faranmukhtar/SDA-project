@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const userQueries = require("../db/user_queries");
 const roleQueries = require("../db/roles_queries");
 

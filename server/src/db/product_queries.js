@@ -37,7 +37,7 @@ async function insertProduct({
   rating,
   category_id,
   retailer_id,
-  image_url
+  image_url,
 }) {
   const { rows } = await pool.query(
     "INSERT INTO Products(product_name, price, description, rating, category_id, retailer_id, image_url) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",

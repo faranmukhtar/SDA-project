@@ -21,7 +21,7 @@ const getProduct = async (req, res) => {
   const limit = Number(req.query.limit);
   const offset = Number(req.query.offset);
 
-  if (limit && isNaN(limit) || offset && isNaN(offset)) {
+  if ((limit && isNaN(limit)) || (offset && isNaN(offset))) {
     return res.status(400).json({ error: "Limit and Offset must be a number" });
   }
 
@@ -46,7 +46,7 @@ const postProduct = async (req, res) => {
     "rating",
     "category_id",
     "retailer_id",
-    "image_url"
+    "image_url",
   ];
   for (let field of fields) {
     if (
@@ -58,8 +58,15 @@ const postProduct = async (req, res) => {
     }
   }
 
-  const { name, price, description, rating, category_id, retailer_id, image_url } =
-    req.body;
+  const {
+    name,
+    price,
+    description,
+    rating,
+    category_id,
+    retailer_id,
+    image_url,
+  } = req.body;
 
   if (isNaN(price)) {
     return res.status(400).json({ error: "Price must be a number" });
@@ -89,7 +96,7 @@ const postProduct = async (req, res) => {
       rating,
       category_id,
       retailer_id,
-      image_url
+      image_url,
     });
     res.status(201).json({ result });
   } catch (error) {
@@ -100,7 +107,14 @@ const postProduct = async (req, res) => {
 
 const putProduct = async (req, res) => {
   const index = Number(req.params.index);
-  const fields = ["name", "price", "description", "rating", "category_id", "image_url"];
+  const fields = [
+    "name",
+    "price",
+    "description",
+    "rating",
+    "category_id",
+    "image_url",
+  ];
 
   if (isNaN(index)) {
     return res.status(400).json({ error: "Index must be a number" });
