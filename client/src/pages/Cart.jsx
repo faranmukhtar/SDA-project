@@ -4,23 +4,24 @@ import styles from "../styles/Cart.module.css";
 
 const dummyItems = [
   { id: 1, name: "Product 1", price: 99.99, quantity: 1 },
-  { id: 2, name: "Product 2", price: 150.00, quantity: 1 },
-  { id: 3, name: "Product 3", price: 25.00, quantity: 2 },
+  { id: 2, name: "Product 2", price: 150.0, quantity: 1 },
+  { id: 3, name: "Product 3", price: 25.0, quantity: 2 },
 ];
 
-export default function Cart(){
+export default function Cart() {
   const [items, setItems] = useState(dummyItems);
-  const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const removeItem = (id) =>{
+  const subtotal = items.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0,
+  );
+  const removeItem = (id) => {
     setItems(items.filter((item) => item.id !== id));
   };
 
-  return(
-  
+  return (
     <div className={styles.wrapper}>
       <Navbar />
       <div className={styles.container}>
-        
         <div className={styles.titleSection}>
           <h1 className={styles.title}>Cart</h1>
           <hr className={styles.seperatorLine} />
@@ -28,7 +29,7 @@ export default function Cart(){
 
         <div className={styles.gridContainer}>
           {items.length > 0 ? (
-            items.map((item) =>(
+            items.map((item) => (
               <div key={item.id} className={styles.card}>
                 <div className={styles.imagePlaceholder}>
                   <span className={styles.imageText}>Image Placeholder</span>
@@ -36,11 +37,13 @@ export default function Cart(){
                 <div className={styles.cardDetails}>
                   <h3 className={styles.itemName}>{item.name}</h3>
                   <p className={styles.itemPrice}>${item.price.toFixed(2)}</p>
-                  
+
                   <div className={styles.cardActions}>
-                    <span className={styles.quantity}>Quantity: {item.quantity}</span>
-                    <button 
-                      className={styles.removeBtn} 
+                    <span className={styles.quantity}>
+                      Quantity: {item.quantity}
+                    </span>
+                    <button
+                      className={styles.removeBtn}
                       onClick={() => removeItem(item.id)}
                     >
                       Remove
@@ -72,11 +75,12 @@ export default function Cart(){
                 <span>Total:</span>
                 <span>${subtotal.toFixed(2)}</span>
               </div>
-              <button className={styles.checkoutBtn}>Proceed to Checkout</button>
+              <button className={styles.checkoutBtn}>
+                Proceed to Checkout
+              </button>
             </div>
           </div>
         )}
-
       </div>
     </div>
   );

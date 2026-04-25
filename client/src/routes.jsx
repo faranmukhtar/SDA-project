@@ -2,7 +2,7 @@ import Admin from "./pages/Admin";
 import Cart from "./pages/Cart";
 import Catalog from "./pages/Catalog";
 import ErrorPage from "./pages/ErrorPage";
-import Home from "./pages/home";
+import Home from "./pages/Home";
 import Retailer from "./pages/Retailer";
 import Search from "./pages/Search";
 

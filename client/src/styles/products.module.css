@@ -1,0 +1,15 @@
+.box {
+  height: 300px;
+  width: 400px;
+  margin: 20px;
+  border: solid black;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.box img {
+  object-fit: cover;
+  height: 80%;
+  width: 100%;
+  border: solid black;
+}

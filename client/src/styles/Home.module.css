@@ -1,0 +1,66 @@
+.page {
+  height: 1000px;
+  width: 100%;
+  background-color: white;
+}
+
+.line {
+  width: 1100px;
+  border: solid rgb(66, 130, 181);
+  margin-left: 38px;
+}
+
+.button {
+  height: 50px;
+  width: 120px;
+  border: 3px solid white;
+  font-weight: bolder;
+  color: rgb(53, 162, 176);
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px;
+  margin-top: 40px;
+  padding: 5px;
+  text-decoration: none;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.button:hover {
+  background-color: rgb(53, 162, 176);
+  color: white;
+  box-shadow: 5px 5px 20px rgba(53, 162, 176, 0.5);
+  cursor: pointer;
+}
+
+.Featured {
+  height: 200px;
+  width: 220px;
+  font-size: larger;
+  font-weight: bolder;
+  color: rgb(53, 162, 176);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px;
+  margin-top: 40px;
+  padding: 5px;
+  text-decoration: none;
+  margin-right: 850px;
+}
+
+.items {
+  display: flex;
+  width: 1000px;
+  margin-left: 40px;
+}
+
+.Navigate {
+  display: flex;
+  justify-content: left;
+  margin-left: 100px;
+  width: 80%;
+  height: 400px;
+  background-color: white;
+}
