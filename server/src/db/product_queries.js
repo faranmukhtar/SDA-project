@@ -3,20 +3,31 @@ const pool = require("./pool");
 //keep in mind that SELECT queries are going to be expensive so instead limit them to a small number
 //Also products are dependent upon the page that the user is on which is the offset variable
 
-async function getProducts(limit, offset) {
-  const { rows } = await pool.query(
-    "SELECT * FROM Products LIMIT $1 OFFSET $2",
-    [limit, offset],
-  );
+async function getProducts({ limit, offset }) {
+  let query = "SELECT * FROM Products";
+  let count = 1;
+  let arr = [];
+  if (limit) {
+    query = query.concat(` LIMIT $${count}`);
+    arr.push(limit);
+    count++;
+  }
+
+  if (offset) {
+    query = query.concat(` OFFSET $${count}`);
+    arr.push(offset);
+  }
+
+  const { rows } = await pool.query(query, arr);
   return rows;
 }
 
-async function getProduct(name) {
+async function getProduct(id) {
   const { rows } = await pool.query(
-    "SELECT * FROM Products WHERE product_name = $1",
-    [name],
+    "SELECT * FROM Products WHERE product_id = $1",
+    [id],
   );
-  return rows;
+  return rows[0];
 }
 
 async function insertProduct({
@@ -26,27 +37,51 @@ async function insertProduct({
   rating,
   category_id,
   retailer_id,
+  image_url,
 }) {
-  await pool.query(
-    "INSERT INTO Products(product_name, price, description, rating, category_id, retailer_id) VALUES($1, $2, $3, $4, $5, $6)",
-    [name, price, description, rating, category_id, retailer_id],
+  const { rows } = await pool.query(
+    "INSERT INTO Products(product_name, price, description, rating, category_id, retailer_id, image_url) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+    [name, price, description, rating, category_id, retailer_id, image_url],
   );
+
+  return rows[0];
 }
 
 //ILIKE is case insensitive
-async function searchProductByQuery(query) {
-  const { rows } = await pool.query(
-    "SELECT * FROM Products WHERE product_name ILIKE $1 OR description ILIKE $1",
-    [`%${query}%`],
-  );
-  return rows;
-}
+async function searchProduct({ search, category, limit, offset }) {
+  let query = "SELECT * FROM Products";
+  let inputArr = [];
+  let count = 1;
+  if (category && search) {
+    query = query.concat(
+      ` WHERE (product_name ILIKE $${count} OR description ILIKE $${count}) AND category_id = $${count + 1}`,
+    );
+    inputArr.push(`%${search}%`, category);
+    count += 2;
+  } else if (category) {
+    query = query.concat(` WHERE category_id = $${count}`);
+    inputArr.push(category);
+    count++;
+  } else if (search) {
+    query = query.concat(
+      ` WHERE product_name ILIKE $${count} OR description ILIKE $${count}`,
+    );
+    inputArr.push(`%${search}%`);
+    count++;
+  }
 
-async function searchProductByCategory(category) {
-  const { rows } = await pool.query(
-    "SELECT * FROM Products WHERE category_id = $1",
-    [category],
-  );
+  if (limit) {
+    query = query.concat(` LIMIT $${count}`);
+    inputArr.push(limit);
+    count++;
+  }
+
+  if (offset) {
+    query = query.concat(` OFFSET $${count}`);
+    inputArr.push(offset);
+  }
+
+  const { rows } = await pool.query(query, inputArr);
   return rows;
 }
 
@@ -61,13 +96,15 @@ async function updateProduct(id, fields) {
   const values = Object.values(fields);
   values.push(id);
 
-  const query = `UPDATE Products SET ${setClause} WHERE product_id = $${keys.length + 1}`;
-  await pool.query(query, values);
+  const query = `UPDATE Products SET ${setClause} WHERE product_id = $${keys.length + 1} RETURNING *`;
+  const { rows } = await pool.query(query, values);
+  return rows[0];
 }
 
-async function deleteProduct(name) {
-  const query = `DELETE FROM Products WHERE product_name = $1`;
-  await pool.query(query, [name]);
+async function deleteProduct(index) {
+  const query = `DELETE FROM Products WHERE product_id = $1`;
+  const { rowCount } = await pool.query(query, [index]);
+  return rowCount > 0;
 }
 
 module.exports = {
@@ -75,7 +112,6 @@ module.exports = {
   insertProduct,
   getProduct,
   updateProduct,
-  searchProductByCategory,
-  searchProductByQuery,
+  searchProduct,
   deleteProduct,
 };

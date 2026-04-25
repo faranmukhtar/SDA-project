@@ -4,7 +4,7 @@ const userController = require("../controllers/userController");
 
 userRouter.get("/:index", userController.getUserIndex);
 
-userRouter.post("/", userController.postUser);
+userRouter.get("/", userController.getUsers());
 
 userRouter.put("/:index", userController.putUser);
 

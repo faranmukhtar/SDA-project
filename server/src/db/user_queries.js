@@ -7,11 +7,26 @@ async function getUser(index) {
   return rows[0];
 }
 
+async function getUsers() {
+  const { rows } = await pool.query("SELECT * FROM Users");
+  return rows;
+}
+
 async function getUserByUsername(username) {
   const { rows } = await pool.query("SELECT * FROM Users WHERE username = $1", [
     username,
   ]);
   return rows[0];
+}
+
+async function getUserByRole(role) {
+  const { rows } = await pool.query(
+    `SELECT Users.* FROM Users
+     JOIN roles ON Users.role_id = roles.role_id
+     WHERE roles.role_name = $1`,
+    [role],
+  );
+  return rows;
 }
 
 async function insertUser({
@@ -58,19 +73,21 @@ async function updateUser(id, fields) {
 }
 
 // username or id
-async function deleteUser(username) {
+async function deleteUser(index) {
   const query = `
   DELETE FROM Users
-  WHERE username = $1
+  WHERE user_id = $1
   `;
-  const { rowCount } = await pool.query(query, [username]);
+  const { rowCount } = await pool.query(query, [index]);
 
   return rowCount > 0;
 }
 
 module.exports = {
   getUser,
+  getUsers,
   getUserByUsername,
+  getUserByRole,
   insertUser,
   updateUser,
   deleteUser,

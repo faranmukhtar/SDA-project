@@ -1,6 +1,5 @@
 const getIndex = (req, res) => {
-  res.send("Hello world");
-  console.log("Hello from frontend");
+  res.json({ message: "Hello world" });
 };
 
 module.exports = {
